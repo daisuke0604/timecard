@@ -1,13 +1,24 @@
-var users = require('../records');
-var should = require('should');
+var records = require('../records'),
+    Record = require('../record'),
+    should = require('should');
 
-describe('records test', function() {
+describe('recordsテーブルのテスト', function() {
     
-    it('レコード追加', function() {
+    it('レコード追加', function(done) {
+        var newrecord = new Record('2013/11/21', 'test@test.co.jp', 1, '0900', '1800', '0', '0', '0', '0');
+        records.insert(newrecord, function(err) {
+            should.not.exists(err);
+            done();
+        });
     });
 
-    it('レコード検索（date, mail）', function() {
+    it('レコード削除', function(done) {
+        records.deleteOne('2013/11/21', 'test@test.co.jp', function(err) {
+            should.not.exists(err);
+            done();
+        });
     });
+
 
 });
 

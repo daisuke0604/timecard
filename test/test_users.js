@@ -1,17 +1,18 @@
-var users = require('../users');
-var should = require('should');
+var users = require('../users'),
+    User = require('../user'),
+    should = require('should');
 
 describe('userテーブルのテスト', function() {
 
     it('ユーザ追加', function(done) {
-        var newuser = new users.User("test@test.co.jp", "テスト 太郎", "pass", 0);
+        var newuser = new User("test@test.co.jp", "テスト 太郎", "pass", 0);
         users.insert(newuser, function(err) {
             should.not.exists(err);
             done();
         });
     });
     
-    var user = new users.User();
+    var user = new User();
     it('ユーザ検索', function(done) {
         users.findById('test@test.co.jp', user, function(err) {
             should.not.exists(err);
@@ -25,4 +26,18 @@ describe('userテーブルのテスト', function() {
         should.equal(user.name, 'テスト 太郎');
     });
 
+    it('ユーザ削除', function(done) {
+        users.deleteById(user.mail, function(err) {
+            done();
+        });
+    });
+
+    it('ユーザ検索（いない）', function(done) {
+        users.findById('test@test.co.jp', user, function(err) {
+            should.equal(err, 'not found');
+            done();
+        });
+    });
+
 });
+

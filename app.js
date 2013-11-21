@@ -26,4 +26,27 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
 
+var users = require("users"),
+    User = require("user");
 
+var user = new User();
+
+// LocalStrategy設定
+passport.use(new LocalStrategy(
+    {usernameField: "mail", passowrdField: "password"},
+    function(mail, password, done) {
+        process.nextTick(function() {
+            users.findById(mail, user, function(err) {
+                if (err) {
+                    // 見つからない場合も含む
+                    return done(err);
+                }
+                var hashedPass = getHash(password);
+                if (user.password !== hashedPass) {
+                    return done(null, false, {message: 'ログインエラー'});
+                }
+                return done(null, user);
+            });
+        });
+    }
+));
