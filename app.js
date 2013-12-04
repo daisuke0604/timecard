@@ -4,7 +4,7 @@ var express = require('express'),
     path = require('path');
 
 // ハッシュ値計算準備
-var crypt = require('crypto');
+var crypto = require('crypto');
 var secretKey = "benest_daisuke_yamamoto";
 var getHash = function(target) {
     var sha = crypto.createHmac("sha256", secretKey);
@@ -43,6 +43,8 @@ passport.use(new LocalStrategy(
                 }
                 var hashedPass = getHash(password);
                 if (user.password !== hashedPass) {
+                    console.log(user.password);
+                    console.log(hashedPass);
                     return done(null, false, {message: 'ログインエラー'});
                 }
                 return done(null, user);
