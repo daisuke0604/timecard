@@ -15,7 +15,7 @@
         "connect-flash": "*",
         "sqlite3": "*"
     },
-    "devDepndencies": {
+    "devDependencies": {
         "mocha": "*",
         "should": "*"
     }
