@@ -1,0 +1,19 @@
+日付: datebox
+-----
+出勤: radio
+出勤時刻: select
+退勤時刻: select
+-----
+残業: select
+深夜: select
+休日: select
+控除: select
+-----
+届出
+番号: text
+種別: select
+事由: text
+詳細: link
+-----
+昨日|今日|明日 footter-nav
+
