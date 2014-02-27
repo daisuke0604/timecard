@@ -1,13 +1,19 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Login</title>
-<h1>Login</h1>
-<p>
-    <p><%= message %></p>
-    <form action="/login" method="post">
-        <input type="text" name="mail" placeholder="mail" /><br/>
-        <input type="password" name="password" placeholder="password" />
-        <input type="submit" value="Login" />
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/signin.css" media="all">
+
+<div class="container">
+    <form class="form-signin" action="/login" method="post" role="form">
+        <h2 class="form-signin-heading"><%= message %></h2>
+        <input type="text" name="mail" class="form-control" placeholder="Email" required autofocus />
+        <input type="password" name="password" class="form-control" placeholder="Password" required />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
     </form>
-</p>
+</div><!-- container -->
 
-
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
