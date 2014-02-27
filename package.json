@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
-        "starts": "node app.js",
+        "start": "node app.js",
         "test": "mocha"
     },
     "dependencies": {
