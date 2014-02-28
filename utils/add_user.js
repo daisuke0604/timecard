@@ -1,5 +1,4 @@
-var users = require('../users'),
-    User = require('../user'),
+var users = require('../models/users'),
     should = require('should');
 
 var crypto = require('crypto');
@@ -11,6 +10,6 @@ var getHash = function(target){
     return sha.digest("hex");
 };
 
-var newuser = new User("test1@test.co.jp", "テスト 太郎", getHash("pass"), 0);
+var newuser = new users.User("test1@test.co.jp", "テスト 太郎", getHash("pass"), 0);
 users.insert(newuser);
 

@@ -1,7 +1,9 @@
-var express = require('express'),
-    routes = require('./routes'),
-    http = require('http'),
-    path = require('path');
+var express = require('express');
+var routes = require('./routes');
+var http = require('http');
+var path = require('path');
+
+var users = require("./models/users");
 
 // ハッシュ値計算準備
 var crypto = require('crypto');
@@ -13,23 +15,20 @@ var getHash = function(target) {
 };
 
 // Passport準備
-var flash = require('connect-flash'),
-    passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy;
+var flash = require('connect-flash');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 // Passportでのセッション設定
 passport.serializeUser(function(user, done) {
-    // TODO シリアライズ対象のみ
+    done(null, {mail: user.mail, name: user.name});
+});
+
+passport.deserializeUser(function(user, done) {
     done(null, user);
 });
-passport.deserializeUser(function(obj, done) {
-    done(null, obj);
-});
 
-var users = require("./users"),
-    User = require("./user");
-
-var user = new User();
+var user = new users.User();
 
 // LocalStrategy設定
 passport.use(new LocalStrategy(
@@ -39,7 +38,7 @@ passport.use(new LocalStrategy(
             users.findById(mail, user, function(err) {
                 if (err) {
                     // 見つからない場合も含む
-                    return done(err);
+                    return done(null, false, 'ログインエラー');
                 }
                 var hashedPass = getHash(password);
                 if (user.password !== hashedPass) {
@@ -95,8 +94,8 @@ app.get("/login", function(req, res){
 app.post("/login",
     passport.authenticate("local", {failureRedirect: '/login', failureFlash: true}),
     function(req, res){
-        // ログインに成功したらトップへリダイレクト
-        res.redirect("/");
+        // ログインに成功 -> Timecardページへ
+        res.redirect("/timecard");
     }
 );
 
@@ -104,8 +103,9 @@ app.get("/logout", function(req, res){
     req.logout();
     res.redirect("/");
 });
-app.get("/member_only", isLogined, function(req, res){
-    res.render("member_only", {user: req.user});
+
+app.get("/timecard", isLogined, function(req, res){
+    res.render("timecard", {user: req.user});
 });
 
 http.createServer(app).listen(app.get('port'), function(){
