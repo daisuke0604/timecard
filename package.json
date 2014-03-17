@@ -1,23 +1,23 @@
 {
-    "name": "BeNest-Timecard",
-    "description": "BeNest Timecard",
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-        "start": "node app.js",
-        "test": "mocha"
-    },
-    "dependencies": {
-        "express": "3.4.x",
-        "ejs": "*",
-        "passport": "*",
-        "passport-local": "*",
-        "connect-flash": "*",
-        "sqlite3": "*"
-    },
-    "devDependencies": {
-        "mocha": "*",
-        "should": "*"
-    }
+  "name": "BeNest-Timecard",
+  "description": "BeNest Timecard",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "express": "3.4.x",
+    "ejs": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "connect-flash": "*",
+    "sqlite3": "*",
+    "dateformat": "~1.0.7-1.2.3"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  }
 }
-

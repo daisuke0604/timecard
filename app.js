@@ -5,6 +5,8 @@ var path = require('path');
 
 var users = require("./models/users");
 
+var dateformat = require('dateformat');
+
 // ハッシュ値計算準備
 var crypto = require('crypto');
 var secretKey = "benest_daisuke_yamamoto";
@@ -69,7 +71,8 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.bodyParser());
+app.use(express.json());
+app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({secret: "benestbenestbenest"}));
@@ -104,8 +107,10 @@ app.get("/logout", function(req, res){
     res.redirect("/");
 });
 
-app.get("/timecard", isLogined, function(req, res){
-    res.render("timecard", {user: req.user});
+app.get("/timecard", isLogined, function(req, res) {
+    //console.log(req.route);
+    //console.log(req.headers);
+    res.render("timecard", {user: req.user, date: dateformat(new Date(), "yyyy年mm月dd日")});
 });
 
 http.createServer(app).listen(app.get('port'), function(){
